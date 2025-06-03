@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="PT-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestIA</title>
+    <style>
+        /* Estilo global */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff; /* Fundo azul claro */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Container Principal */
+        .container {
+            background-color: #ffffff; /* Fundo branco */
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra para destaque */
+        }
+
+        /* Título Centralizado */
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #0056b3; /* Azul escuro */
+            margin-top: 0;
+        }
+
+        /* Formulário de Upload */
+        .upload-form {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .upload-form label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .upload-form input[type="file"] {
+            margin-bottom: 20px;
+        }
+
+        /* Botões de ação */
+        button {
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+        }
+
+        /* Botão de copiar (ícone) */
+        .copy-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            position: absolute; /* Posiciona o botão perto do campo */
+            right: 20px;
+            top: 8px;
+        }
+
+        .copy-button i {
+            font-size: 20px;
+            color: #c5cbd2;
+        }
+
+        .copy-button:hover i {
+            color: #c5c9cd; /* Azul mais escuro para hover */
+        }
+
+        /* Campo de texto (textarea) */
+        textarea {
+            width: 100%; /* Largura total */
+            font-family: "Courier New", Courier, monospace;
+            font-size: 16px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            line-height: 1.6;
+            resize: none;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra interna */
+            background-color: #f9f9f9;
+            color: #333;
+            overflow-y: auto; /* Barra de rolagem, se necessário */
+            position: relative;
+        }
+
+        /* Regras de texto específicas */
+        #rules {
+            height: 150px; /* Campo de regras de negócio */
+        }
+
+        #scenarios {
+            height: 600px; /* Campo grande para cenários */
+        }
+
+        /* Título para "Cenários Gerados" */
+        h2 {
+            font-size: 28px;
+            color: #0056b3;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Mensagens de erro */
+        .error {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Adiciona margem entre o botão copiar e o texto */
+        .area-container {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Geração de Cenários de Teste no Formato Gherkin</h1>
+
+        <!-- Formulário para Upload -->
+        <div class="upload-form">
+            <form method="post" enctype="multipart/form-data" id="uploadForm">
+                <label for="files">Faça upload de uma ou mais imagens:</label>
+                <input type="file" id="files" name="files[]" multiple>
+                
+                <label for="rules">Regras de Negócio (opcional):</label>
+                <textarea id="rules" name="rules" placeholder="Insira as regras de negócio aqui, por exemplo: Senha deve ter pelo menos 14 caracteres..."></textarea>
+                
+                <button type="submit">Enviar</button>
+                <button type="button" id="deleteButton" onclick="clearForm()">Excluir Arquivos</button>
+            </form>
+        </div>
+
+        <!-- Mensagens de erro -->
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <!-- Exibição dos Cenários -->
+        {% if scenarios %}
+            <h2>Cenários Gerados:</h2>
+            <div class="area-container">
+                <textarea id="scenarios" readonly>{{ scenarios }}</textarea>
+                <button class="copy-button" onclick="copyToClipboard()">
+                    <i>📋</i>
+                </button>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Função para limpar o formulário (Excluir arquivos selecionados e limpar campos)
+        function clearForm() {
+            // Limpar os campos do formulário de upload
+            document.getElementById("uploadForm").reset();
+
+            // Mostrar feedback ao usuário
+            alert("Arquivos enviados e campo de regras foram limpos!");
+        }
+
+        // Função para copiar o conteúdo do textarea
+        function copyToClipboard() {
+            const textarea = document.getElementById("scenarios");
+            textarea.select(); // Seleciona o conteúdo do campo
+            textarea.setSelectionRange(0, 99999); // Para compatibilidade com dispositivos móveis
+            document.execCommand("copy"); // Comando para copiar o conteúdo
+            alert("Texto copiado para a área de transferência!"); // Feedback ao usuário
+        }
+    </script>
+</body>
+</html>

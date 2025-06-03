@@ -1,0 +1,5 @@
+Flask
+easyocr
+google-generativeai
+python-dotenv
+werkzeug
