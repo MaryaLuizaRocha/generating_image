@@ -48,7 +48,7 @@ Certifique-se de ter o **Python 3.7 ou superior** instalado na sua máquina. Se 
    cd seu-repositorio
    ```text
 
-- OU: Baixe o arquivo #Se possuir o zip
+- OU: Baixe o arquivo SE possuir o zip
 
 2. Crie um ambiente virtual (opcional, mas recomendado):
    ```bash
